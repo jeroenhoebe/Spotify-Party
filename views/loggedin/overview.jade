@@ -1,0 +1,23 @@
+extends ../layout
+
+block content
+  div.container
+    div.row
+      h1 Overview
+  
+    div.row
+      h2 Saved connections
+      
+      -if(connectionids)
+        ul
+          each connectionid in connectionids
+            li
+              a(href="searchsong/#{connectionid.connection_idstr}")= connectionid.connection_idstr
+
+    div.row
+      p Connect via een connectionid met de SpotParty app
+      form(action="/createconnectionid" method="post" role="form").form-inline
+        div.form-group
+          label(for="connectionid").sr-only ConnectionID
+          input(id="connectionid" name="connectionid" type="text" placeholder="ConnectionID").form-control
+        button(type="submit").btn.btn-default Connect

@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  div.container
+    h1.text-center= title
+    p.text-center Welcome to Spotify Party
+
+    div.row
+      div.col-xs-6
+        a(href="/signup").btn.btn-default.pull-right Registreer
+      div.col-xs-6
+        a(href="/login").btn.btn-primary Login

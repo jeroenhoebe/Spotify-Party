@@ -1,0 +1,83 @@
+mixin messages(message)
+  -if(message)
+    -if(message.error)
+      div.alert.alert-danger
+        case message.error.code
+          when 400
+            span.error Foute aanvraag
+          when 401
+            span.error Onvoldoende toegangsrechten
+          when 402
+            span.error Betalende toegang
+          when 403
+            span.error Verboden toegang
+          when 404
+            span.error Niet gevonden
+          when 405
+            span.error Methode niet toegestaan
+          when 406
+            span.error Niet aanvaardbaar
+          when 407
+            span.error Verificatie op de proxyserver verplicht
+          when 408
+            span.error Aanvraagtijd verstreken
+          when 409
+            span.error Conflict
+          when 410
+            span.error Verdwenen
+          when 411
+            span.error Lengte benodigd
+          when 412
+            span.error Niet voldaan aan vooraf gestelde voorwaarde
+          when 413
+            span.error Aanvraag te groot
+          when 414
+            span.error Aanvraag-URL te lang
+          when 415
+            span.error Media-type niet ondersteund
+          when 416
+            span.error Aangevraagd gedeelte niet opvraagbaar
+          when 417
+            span.error Niet voldaan aan verwachting
+          when 450
+            span.error Geblokkeerd door Windows Parental Controls (*: is een niet-officiële HTTP-statuscode)
+          
+          when 500
+            span.error Interne server fout
+          when 501
+            span.error Niet geïmplementeerd
+          when 502
+            span.error Bad Gateway
+          when 503
+            span.error Dienst niet beschikbaar
+          when 504
+            span.error Gateway Timeout
+          when 505
+            span.error HTTP Versie wordt niet ondersteund
+          when 509
+            span.error Bandbreedte overschreden (*: is een niet-officiële HTTP-statuscode)        
+
+          default
+            span.error Oh snap! Houston, we have a problem
+
+    -if(message.warning)
+      div.alert.alert-warning
+        case message.warning.code
+          when 300
+            span.warning Meerkeuze
+          when 301
+            span.warning Definitief verplaatst
+          when 302
+            span.warning Tijdelijk verplaatst
+          when 303
+            span.warning Zie andere
+          when 304
+            span.warning Niet gewijzigd
+          when 305
+            span.warning Gebruik Proxy (vele HTTP-clients (zoals Mozilla en Internet Explorer) gaan slecht met deze code om)
+          when 306
+            span.warning (Gereserveerd)
+          when 307
+            span.warning Tijdelijke omleiding
+          default
+            span.warning Abandon hope all ye who enter this way

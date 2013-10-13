@@ -1,0 +1,29 @@
+extends ../layout
+
+block content
+  div.container
+    div.row
+      h1 Registreer
+
+    div.row
+      form(action="/signup" method="post" role="form").form-horizontal
+        
+        div.form-group
+          label(for="email").col-lg-2 Email
+          div.col-lg-10
+            input(type="email" id="email" name="email" required="required" placeholder="Email").form-control
+        
+        div.form-group
+          label(for="password").col-lg-2 password
+          div.col-lg-10
+            input(type="password" id="password" name="password" required="required" placeholder="password").form-control
+
+        div.form-group
+          label(for="confirmpassword").col-lg-2 confirmpassword
+          div.col-lg-10
+            input(type="password" id="confirmpassword" name="confirmpassword" required="required" placeholder="confirmpassword").form-control
+
+        div.form-group
+          div.col-lg-offset-2.col-lg-10
+            button(type="submit").btn.btn-default Registreer
+
