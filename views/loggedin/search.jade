@@ -7,8 +7,8 @@ block content
 
     div.row
       p Zoek een nummer
-      form(action="/searchsong/#{connection_idstr}" method="post" role="form").form-inline
-        input(type="hidden" id="connection_idstr" value="#{connection_idstr}")
+      form(action="/searchsong/#{playlist_name}" method="post" role="form").form-inline
+        input(type="hidden" id="playlist_name" value="#{playlist_name}")
         input(type="hidden" id="user_id" value="#{user_id}")
 
         div.form-group

@@ -8,28 +8,28 @@ io.sockets.on('connection', function (socket) {
   socket.on('clients', function(data){
     console.log(data);
     
-    socket.broadcast.emit('tospotify/'+data.user_id+'/'+data.connection_idstr+'', {user_id: data.user_id, connection_idstr: data.connection_idstr, songId: data.sendSongId});
+    socket.broadcast.emit('tospotify/'+data.user_id+'/'+data.playlist_name+'', {user_id: data.user_id, playlist_name: data.playlist_name, songId: data.sendSongId});
   });
 });
 
   /*
    * GET search page.
    */
-  app.get('/searchsong/:connection_idstr', checkAuth, function(req, res){
+  app.get('/searchsong/:playlist_name', checkAuth, function(req, res){
 
-    var connection_idstr  = req.params.connection_idstr,
+    var playlist_name  = req.params.playlist_name,
         user_id           = req.session.userid;
     
-    res.render('./loggedin/search', {connection_idstr: connection_idstr, user_id: user_id});
+    res.render('./loggedin/search', {playlist_name: playlist_name, user_id: user_id});
       
   });
 
   /*
    * POST overview page.
    */
-  app.post('/searchsong/:connection_idstr', checkAuth, function(req, res){
+  app.post('/searchsong/:playlist_name', checkAuth, function(req, res){
     var b                 = req.body,
-        connection_idstr  = req.params.connection_idstr,
+        playlist_name  = req.params.playlist_name,
         user_id           = req.session.userid;
     
     // log search param
@@ -82,7 +82,7 @@ io.sockets.on('connection', function (socket) {
         console.log(item);
       }
 
-      res.render('./loggedin/search', { connection_idstr: connection_idstr, user_id: user_id, tracks: tracks });
+      res.render('./loggedin/search', { playlist_name: playlist_name, user_id: user_id, tracks: tracks });
     });
       
   });

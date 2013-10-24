@@ -52,13 +52,13 @@ function displayData(x, that) {
     var that              = this,
         trackhref         = $(that).closest(".trackwrapper").attr('data-trackhref'),
         user_id           = $('#user_id').val(),
-        connection_idstr  = $('#connection_idstr').val();
+        playlist_name  = $('#playlist_name').val();
     
-    console.log(trackhref, user_id, connection_idstr);
+    console.log(trackhref, user_id, playlist_name);
 
 
     var socket = io.connect('http://localhost:8080/');
-        socket.emit('clients', {user_id: user_id, connection_idstr: connection_idstr, sendSongId: trackhref});  
+        socket.emit('clients', {user_id: user_id, playlist_name: playlist_name, sendSongId: trackhref});  
 
 
   });

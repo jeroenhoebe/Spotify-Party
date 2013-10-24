@@ -1,7 +1,7 @@
 var sha1 = require('sha1');
 
 
-module.exports = function(app, checkAuth, mysql, connection){
+module.exports = function(app, checkAuth, mongoose, User, Playlist){
 
   /*
    * GET home page.
@@ -30,20 +30,15 @@ module.exports = function(app, checkAuth, mysql, connection){
       
       if(b.password.length >= 5){
         
-        var postdata = {
+        new User({
           user_email: b.email,
           user_password: sha1(b.password)
-        }
-
-        var query = connection.query('INSERT INTO users SET ?', postdata, function(err, result) {
-          if(err)
-            res.json(err);
-          console.log(err, result);
+        }).save(function(err, newUser){
+          if(err) res.json(err);
         });
 
         
         res.redirect('/login');
-        // res.render('./login/login');
       }else{
         // set message
         message = 'password is to short';
@@ -88,22 +83,16 @@ module.exports = function(app, checkAuth, mysql, connection){
     
     if(user_email && user_password){
       
-      var sql  = "SELECT * FROM `users` WHERE `user_email` = ? AND `user_password` = ?";
-      
-      connection.query(sql, [user_email, user_password], function(err, result) {
+      User.where('user_email', user_email).where('user_password', user_password).exec('find',function(err, user){
         if(err)
           res.json(err);
 
-        if(result.length > 0){
+        // console.log(user);
+        if(user.length > 0){
           // set session
-          req.session.user_id = user_email;
-          req.session.userid = result[0].user_id;
-          var now = new Date();
-          var query = connection.query('UPDATE users SET user_lastlogin=? WHERE user_email=?', [now, user_email], function(err, result) {
-          if(err)
-            res.json(err);
-          });
-
+          req.session.user_id = user[0].user_email;
+          req.session.userid = user[0]._id;
+          
           // go to overview view
           res.redirect('overview');
         }else{
@@ -117,6 +106,7 @@ module.exports = function(app, checkAuth, mysql, connection){
           }
           res.render('./login/login', returnData);
         }
+      
       });
 
     }else{
@@ -138,56 +128,47 @@ module.exports = function(app, checkAuth, mysql, connection){
 
     var user_email = req.session.user_id;
 
-    var sql  = "SELECT connection_id, connection_idstr FROM `users` JOIN `connections` ON connection_userid = user_id WHERE `user_email` = ?";
-      
-    connection.query(sql, [user_email], function(err, results) {
-      if(err)
-        res.json(err);
-
-      if(results){
-        console.log(results);
-        res.render('./loggedin/overview', { connectionids: results });
-      }else{
-        res.render('./loggedin/overview');
-      }
+    Playlist.where('playlist_users.playlist_admin', user_email).exec('find',function(err, playlists){
+        if(err)
+          res.json(err);
+        
+        if(playlists)
+        {
+          // console.log(playlists);
+          res.render('./loggedin/overview', { playlists: playlists });
+        }
+        else
+        {
+          // console.log(user_email);
+          res.render('./loggedin/overview');
+        }
     });
+    
   });
 
   /*
    * POST create connectionid.
    */
-  app.post('/createconnectionid', checkAuth, function(req, res){
+  app.post('/create-playlist', checkAuth, function(req, res){
     var b = req.body;
 
     var user_email = req.session.user_id,
-        connectionid = b.connectionid;
+        playlist_name = b.playlist_name;
 
-    console.log(user_email, connectionid);
+    console.log(user_email, playlist_name);
 
-    if(user_email && connectionid.length > 5){
+    if(user_email && playlist_name.length > 5){
 
-      var sql  = "SELECT * FROM `users` WHERE `user_email` = ? LIMIT 1";
-      
-      connection.query(sql, [user_email], function(err, result) {
-        if(err)
-          res.json(err);
-        
-        if(result){
-          
-          var postdata = { connection_idstr: connectionid, connection_userid: result[0].user_id };
+      new Playlist({
+          playlist_name: playlist_name,
+          playlist_users: {
+            playlist_admin: user_email,
+          }
+        }).save(function(err, newPlaylist){
+          if(err) res.json(err);
 
-          connection.query('INSERT INTO connections SET ?', postdata, function(err, result) {
-            if(err) throw err;
-
-            res.redirect('/searchsong/'+connectionid);
-          });
-
-          // console.log(result, postdata);
-
-        }else{
-          console.log('no user');
-        }
-      });
+          res.redirect('/searchsong/'+playlist_name);
+        });
 
       
     }else{

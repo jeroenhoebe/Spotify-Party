@@ -1,4 +1,4 @@
-module.exports = function(app, checkAuth, mysql, connection){
+module.exports = function(app, checkAuth, mongoose, User, Playlist){
 
   /*
    * POST login.
@@ -15,25 +15,23 @@ module.exports = function(app, checkAuth, mysql, connection){
         user_password = b.password;
 
     if(user_email && user_password){
-      
-      var sql  = "SELECT * FROM `users` WHERE `user_email` = ? AND `user_password` = ?";
-      
-      connection.query(sql, [user_email, user_password], function(err, result) {
-        if(err)
-          res.json(err);
 
-        if(result.length > 0){
+      User.where('user_email', user_email).where('user_password', user_password).exec('find',function(err, user){
+        if(err){
+          res.json(err);
+        }
+
+        // console.log(user);
+        if(user.length > 0){
           returnData = {
             data: {
               user_email: user_email,
-              user_id: result[0].user_id
+              user_id: user[0]._id
             },
             message: { code: 200 }
           };
           res.json(returnData);
         }else{
-          
-          
           returnData = {
             data: { user_email: user_email },
             message: { code: 401 }
@@ -41,6 +39,7 @@ module.exports = function(app, checkAuth, mysql, connection){
           res.json(returnData);
         }
       });
+      
 
     }else{
       
@@ -66,26 +65,33 @@ module.exports = function(app, checkAuth, mysql, connection){
       message: {code: 400}
     };
 
-    var sql  = "SELECT connection_id, connection_idstr FROM `connections` JOIN `users` ON `connection_userid` = `user_id` WHERE user_email = ? AND connection_userid = ?";
-    connection.query(sql, [user_email, user_id], function(err, results) {
-      if(err){
-        console.log(err);
-        returnData.data = err;
-        res.json(returnData);
-      }
-        
-      // if we have results
-      if(results.length > 0){
-        returnData.data = results;
-        returnData.message.code = 200;
+    console.log(user_email, user_id);
 
-        res.json(returnData);
-      }else{
-        returnData.data = "You're trying something sneaky aren't you?";
-        returnData.message.code = 401;
+    if(user_email && user_id){
 
-        res.json(returnData);
-      }
-    });
+      User.where('_id', user_id).where('user_email', user_email).exec('find',function(err, user){
+        if(err)
+          res.json(err);
+
+        if(user.length > 0){
+          console.log(user);
+
+          Playlist.where('playlist_users.playlist_admin', user[0].user_email).exec('find', function(err, playlists){
+            if(err){
+              res.json(err);
+            }
+            console.log(playlists);
+            returnData.data = playlists;
+            returnData.message.code = 200;
+            res.json(returnData);
+          });
+        }else{
+          returnData.data = "You're trying something sneaky aren't you?";
+          returnData.message.code = 401;
+
+          res.json(returnData);
+        }
+      });
+    }
   });
 }

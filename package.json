@@ -10,9 +10,9 @@
     "jade": "*",
     "less-middleware": "*",
     "socket.io":"*",
-    "mysql":"*",
     "sha1":"*",
-    "jquery":"*"
+    "jquery":"*",
+    "mongoose":"*"
   },
   "devDependencies": {
     "nodemon": "*"

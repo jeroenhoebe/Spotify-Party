@@ -6,18 +6,18 @@ block content
       h1 Overview
   
     div.row
-      h2 Saved connections
+      h2 Opgeslagen Afspeellijsten
       
-      -if(connectionids)
+      -if(playlists)
         ul
-          each connectionid in connectionids
+          each playlist in playlists
             li
-              a(href="searchsong/#{connectionid.connection_idstr}")= connectionid.connection_idstr
+              a(href="searchsong/#{playlist.playlist_name}")= playlist.playlist_name
 
     div.row
-      p Connect via een connectionid met de SpotParty app
-      form(action="/createconnectionid" method="post" role="form").form-inline
+      p Maak een Afspeellijst aan 
+      form(action="/create-playlist" method="post" role="form").form-inline
         div.form-group
-          label(for="connectionid").sr-only ConnectionID
-          input(id="connectionid" name="connectionid" type="text" placeholder="ConnectionID").form-control
-        button(type="submit").btn.btn-default Connect
+          label(for="playlist_name").sr-only Naam
+          input(id="playlist_name" name="playlist_name" type="text" placeholder="Afspeellijst").form-control
+        button(type="submit").btn.btn-default Verbind
