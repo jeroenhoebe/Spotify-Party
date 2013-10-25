@@ -12,7 +12,7 @@ app.controller('SearchController', function($scope, $http) {
         });
     }
     $scope.sendSong = function(songId){
-        var socket = io.connect('http://localhost:8080/');
+        var socket = io.connect('http://jeroenhoebe.nl:8080/');
         socket.emit('clients', {sendSongId: songId});  
     }
 
