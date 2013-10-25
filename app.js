@@ -1,89 +1,49 @@
+var io = require('socket.io').listen(8080);
+console.log("socket io running on port 8080");
 
-/**
- * Module dependencies.
- */
-
-var express = require('express')
-  , routes = require('./routes')
-  , user = require('./routes/user')
-  , consearch = require('./routes/consearch')
-  , http = require('http')
-  , path = require('path')
-  , mongoose  = require('mongoose')
-  , jq = require('jquery');
-
-var app = express();
-
-
-
-// all environments
-app.set('port', process.env.PORT || 8000);
-app.set('views', __dirname + '/views');
-app.set('view engine', 'jade');
-app.use(express.favicon());
-app.locals.pretty = true;
-app.use(express.logger('dev'));
-app.use(express.bodyParser());
-app.use(express.methodOverride());
-app.use(express.cookieParser('hoebestaathet'));
-app.use(express.session());
-app.use(app.router);
-app.use(require('less-middleware')({ src: __dirname + '/public' }));
-app.use(express.static(path.join(__dirname, 'public')));
-
-// development only
-if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
-}
-
-// check login
-function checkAuth(req, res, next) {
-  if (!req.session.user_id) {
-    res.redirect('login');
-  } else {
-    res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
-    next();
-  }
-}
-
-app.all('*', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  next();
- });
-
-//connect MongoDB
-mongoose.connect('mongodb://localhost/spotparty');
-
-// SCHEMAS
-var userSchema = mongoose.Schema({
-    user_email: {type: String, required: true},
-    user_password: String,
-    user_metadata: {
-      user_createdate: {type: Date, default: Date.now()},
-      user_modifydate: {type: Date, default: Date.now()},
-      user_deletedate: {type: Date, default: null}
-    }
+io.sockets.on('connection', function (socket) {
+  socket.on('clients', function(data){
+    console.log(data);
+    
+    var receivedSong = data.sendSongId;
+    socket.broadcast.emit('tospotify', {songId: receivedSong});
   });
-
-var playlistSchema = mongoose.Schema({
-  playlist_name: {type: String, required: true},
-  playlist_public: {type: Boolean, default: true},
-  playlist_users: {
-    playlist_admin: {type: String},
-    playlist_followers: [String]
-  }
 });
 
-// MODELS
-var User = mongoose.model('User', userSchema);
-var Playlist = mongoose.model('Playlist', playlistSchema);
 
-// require routes
-require('./routes/index')(app, checkAuth, mongoose, User, Playlist);
-require('./routes/consearch')(app, checkAuth, jq);
-require('./routes/api')(app, checkAuth, jq, mongoose, User, Playlist);
+var http = require('http'),
+    fs = require('fs'), path = require('path');
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
-});
+http.createServer(function(request, response) {
+	var filePath = '.' + request.url;
+	if(filePath == './')
+		filePath = './index.html';
+	var extname = path.extname(filePath);
+	var contentType = 'text/html';
+	switch (extname){
+		case '.js':
+			contentType = 'text/javascript';
+			break;
+		case '.css':
+			contentType = 'text/css';
+			break;
+	}
+	fs.exists(filePath, function(exists) {
+		if(exists){
+			fs.readFile(filePath, function(error, content){
+				if(error){
+					response.writeHead(500);
+					response.end();
+				}
+				else{
+					response.writeHead(200, { 'Content-Type': 'text/html' });
+					response.end(content, 'utf-8');
+				}
+			});
+		}else{
+			response.writeHead(404);
+			response.end();
+		}
+	});
+}).listen(8000);
+console.log("http server started on port 8000");

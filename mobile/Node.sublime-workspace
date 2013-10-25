@@ -1,0 +1,187 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 47.0,
+		"selected_items":
+		[
+			[
+				"Package Control: insta",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 125.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/jeroenhoebe/Projects/Node/tnw_hackbattle/app.js",
+		"/Users/jeroenhoebe/Projects/Node/tnw_hackbattle/mobile/index.html",
+		"/Users/jeroenhoebe/Projects/Node/tnw_hackbattle/mobile/css/style.css",
+		"/Users/jeroenhoebe/Documents/Node/tnw_hackbattle/app.js",
+		"/Users/jeroenhoebe/Documents/Node/tnw_hackbattle/index.html",
+		"/Users/jeroenhoebe/Documents/Node/hello_word/index.html",
+		"/Users/jeroenhoebe/Documents/Node/hello_word/hello.js",
+		"/Users/jeroenhoebe/Documents/Clients/Localdev/sockettest/js/controllers.js",
+		"/Users/jeroenhoebe/Documents/Clients/Localdev/sockettest/js/phones.json",
+		"/Users/jeroenhoebe/Documents/Clients/Localdev/sockettest/index.html",
+		"/Users/jeroenhoebe/Documents/Clients/Localdev/sockettest/controllers.js",
+		"/Users/jeroenhoebe/Documents/Clients/Localdev/sockettest/projects.js",
+		"/Users/jeroenhoebe/Documents/Node/hackbattle/appkoc.js",
+		"/Users/jeroenhoebe/Documents/Node/hackbattle/sftp-config.json",
+		"/Users/jeroenhoebe/Documents/Node/havingfun/public/views/index.jade",
+		"/Users/jeroenhoebe/Documents/Node/havingfun/app.js",
+		"/Users/jeroenhoebe/Documents/Node/test_socketio/app.js",
+		"/Users/jeroenhoebe/.bash_profile",
+		"/Users/jeroenhoebe/Documents/Node/nodecellar/package.json",
+		"/Users/jeroenhoebe/Documents/Node/nodecellar/routes/wines.js",
+		"/Users/jeroenhoebe/Documents/Node/nodecellar/server.js",
+		"/Users/jeroenhoebe/Documents/Node/noduino/views/home.jade",
+		"/Users/jeroenhoebe/Documents/Node/noduino/examples.snippet",
+		"/Users/jeroenhoebe/Documents/Node/noduino/README.md",
+		"/Users/jeroenhoebe/Documents/Node/express_twitter_mongodb/app.js",
+		"/Users/jeroenhoebe/Documents/Node/tweetstream/tweetstream.js",
+		"/Users/jeroenhoebe/Library/Application Support/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
+		"/Users/jeroenhoebe/Documents/Node/tweetstream/package.sjon",
+		"/Users/jeroenhoebe/Documents/Meteor/meteor_chat_app/meteor_chat_app.js",
+		"/Users/jeroenhoebe/Documents/Meteor/meteor_chat_app/meteor_chat_app.html",
+		"/Users/jeroenhoebe/Documents/Meteor/meteor_chat_app/meteor_chat_app.css",
+		"/Users/jeroenhoebe/Documents/Meteor/peoplefinder/peoplefinder.html",
+		"/Users/jeroenhoebe/Documents/Meteor/meteor_chat/meteor_chat.html",
+		"/Users/jeroenhoebe/Documents/Meteor/meteor_chat/meteor_chat.js",
+		"/Users/jeroenhoebe/Documents/Meteor/meteor_chat/meteor_chat.css",
+		"/Users/jeroenhoebe/Documents/Meteor/meteor_chat/meteor_chat_app.css",
+		"/Users/jeroenhoebe/Documents/Meteor/meteor_chat/meteor_chat_app.html",
+		"/Users/jeroenhoebe/Documents/Meteor/meteor_chat/meteor_chat_app.js",
+		"/Users/jeroenhoebe/Documents/Meteor/peoplefinder/peoplefinder.js"
+	],
+	"find":
+	{
+		"height": 0.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"imageUrl",
+			"   +",
+			"   + ",
+			"if"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.sftp":
+	{
+		"height": 100.0
+	},
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+			[
+				"",
+				"/Users/jeroenhoebe/Documents/Meteor/Meteor.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 186.0,
+	"status_bar_visible": true
+}

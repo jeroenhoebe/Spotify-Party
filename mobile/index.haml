@@ -1,0 +1,33 @@
+%html{"ng-app" => "SpotifyPlaylistBuilder"}
+  %head
+    %title Spotify Playlist Builder
+    %meta{ :name => 'viewport', :content => 'width=device-width, initial-scale=1.0' }
+    %link{:rel => "stylesheet", :href => "css/fontface.css"}
+    %link{:rel => "stylesheet", :href => "css/style.css"}
+    %script{ :src => "http://localhost:8080/socket.io/socket.io.js"}
+    %script{:type => "text/javascript", :src => "vendor/angular.js"}
+    %script{:type => "text/javascript", :src => "js/app.js"}
+    %script{:type => "text/javascript", :src => "js/searchController.js"}
+    
+
+  %body
+    .container{'ng-controller' => "SearchController"}
+      .searchbox
+        %form.clearfix{"ng-submit" => "getData(search_input)"}
+          %input{:type => "search", "ng-model" => "search_input", :placeholder => "Search for Artist or Track"}
+          %button.icon-search{:type => "submit", :value => "\f002", "ng-click" => "getData(search_input)"}
+          
+      .playlist
+        %ul
+          %li.clearfix{"ng-repeat" => "item in data", "ng-animate" => "'view'"}
+            .btn{"ng-click" => "sendSong(item.href)"}
+              %span +
+            .content
+              %h2 {{item.name}}
+              %h3 {{item.artists[0].name}} - {{item.album.name}}
+
+          %p{"ng-show" => "no_results == true && search_input != ''"}
+            Sorry, no results
+
+          %p.intro{"ng-show" => "search_input == ''" }
+            Search for your favorite song or artist.
