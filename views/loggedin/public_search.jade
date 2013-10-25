@@ -1,0 +1,46 @@
+extends ../layout
+
+block content
+  div.container
+    div.row
+      h1 Search
+
+    div.row
+      p Zoek een nummer
+      form(action="/jacuzzi/#{playlist_name}" method="post" role="form").form-inline
+        input(type="hidden" id="playlist_name" value="#{playlist_name}")
+        input(type="hidden" id="user_id" value="#{user_id}")
+
+        div.form-group
+          label(for="searchsong").sr-only Nummer
+          input(id="searchsong" name="searchsong" type="text" placeholder="Search Music").form-control
+        button(type="submit").btn.btn-default Search
+
+    -if(tracks)
+      div.row
+        div.col-xs-12
+          h2 Gezochte Nummers
+      
+      div.row#tracks
+        each track in tracks
+          div(data-trackhref="#{track.href}").col-md-2.col-xs-6.col-sm-3.trackwrapper
+            div.trackimage
+              -if(track.img.cover)
+                img(src="#{track.img.cover}").img-rounded
+              -else
+                img(src="/images/default-track.jpg").img-rounded
+              span.glyphicon.glyphicon-plus.img-rounded.add-track
+            div
+              span.artist= track.artists[0].name
+              span.track= track.name
+
+
+block scripts
+  script(src="/js/jquery-1.8.3.min.js")
+  script(src="http://localhost:8080/socket.io/socket.io.js")
+  script(src="/js/hoebe.js")
+
+
+
+
+

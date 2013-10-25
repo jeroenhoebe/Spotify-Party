@@ -82,7 +82,7 @@ var Playlist = mongoose.model('Playlist', playlistSchema);
 // require routes
 require('./routes/index')(app, checkAuth, mongoose, User, Playlist);
 require('./routes/consearch')(app, checkAuth, jq);
-require('./routes/api')(app, checkAuth, mongoose, User, Playlist);
+require('./routes/api')(app, checkAuth, jq, mongoose, User, Playlist);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

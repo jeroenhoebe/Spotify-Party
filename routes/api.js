@@ -1,4 +1,4 @@
-module.exports = function(app, checkAuth, mongoose, User, Playlist){
+module.exports = function(app, checkAuth, jq, mongoose, User, Playlist){
 
   /*
    * POST login.
@@ -93,5 +93,76 @@ module.exports = function(app, checkAuth, mongoose, User, Playlist){
         }
       });
     }
+  });
+
+
+  app.get('/jacuzzi', function(req, res){
+    var playlist_name  = "jacuzzi party",
+        user_id        = "525db90f7d3b646099000001";
+    
+    res.render('./loggedin/public_search', {playlist_name: playlist_name, user_id: user_id});
+  });
+
+  /*
+   * POST overview page.
+   */
+  app.post('/jacuzzi/:playlist_name', function(req, res){
+    var b                 = req.body,
+        playlist_name  = req.params.playlist_name,
+        user_id           = "525db90f7d3b646099000001";
+    
+    // log search param
+    console.log(b.searchsong);
+
+    // set uri search req
+    var urireq = 'http://ws.spotify.com/search/1/track.json?q='+b.searchsong;
+
+    // retrieve json
+    jq.getJSON(urireq, function(data) {
+      // console.log(data);
+      
+      // set tracks array
+      var tracks = [];
+
+      // check if there are more than 10 tracks
+      if(data.tracks.length > 10){
+
+        // loop through 10 tracks
+        for (var i = 0; i < 10; i++) {
+          
+          // set song data
+          var trackinfo = data.tracks[i];
+
+          trackinfo.img = { 
+            cover: "/images/default-track.jpg"
+          };
+
+
+          tracks.push(trackinfo);
+        };
+      }else{
+        for (var i = 0; i < data.tracks.length; i++) {
+          var trackinfo = data.tracks[i];
+          trackinfo.img = { 
+            cover: "/images/default-track.jpg"
+          };
+
+          tracks.push(trackinfo);
+        };
+
+      }
+
+      // console.log(tracks);
+      // $.each( data.tracks, function( key, value ) {
+      //   alert( key + ": " + value );
+      // });
+
+      function checkCoverData(item){
+        console.log(item);
+      }
+
+      res.render('./loggedin/search', { playlist_name: playlist_name, user_id: user_id, tracks: tracks });
+    });
+      
   });
 }
